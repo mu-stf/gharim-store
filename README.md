@@ -1,36 +1,186 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Gharim Store | غريم ستور
 
-## Getting Started
+A modern, bilingual (English/Arabic) e-commerce marketplace built with Next.js, inspired by Iraqi culture and Islamic values.
 
-First, run the development server:
+![Gharim Store](public/logo.svg)
+
+## ✨ Features
+
+### 🌍 Bilingual Support
+- **English & Arabic** with RTL support
+- Dynamic language switching
+- Fully localized UI
+
+### 🎨 Modern Design
+- Calm, professional aesthetic
+- Gold & olive color palette  
+- Smooth animations with Framer Motion
+- Responsive layout
+
+### 🛒 E-Commerce Functionality
+- Product catalog with sections (coffee, sweets, gifts, etc.)
+- Individual product pages
+- Admin panel for product uploads
+- Image storage via Supabase
+
+### 🎯 Special Features
+- **Presentation Mode**: Auto-play narration and scrolling
+- **Audio Narration**: Welcome messages in EN/AR
+- **Language Context**: Seamless language switching
+- **Error Handling**: Graceful handling of missing assets
+
+## 🚀 Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS v4
+- **Database**: Supabase
+- **Storage**: Supabase Storage
+- **Animation**: Framer Motion
+- **Language**: TypeScript
+
+## 📦 Installation
 
 ```bash
+# Clone the repository
+git clone <your-repo-url>
+cd iraqi-islamic-marketplace
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your Supabase credentials
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔑 Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file with the following:
 
-## Learn More
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-To learn more about Next.js, take a look at the following resources:
+Get these from your [Supabase Dashboard](https://app.supabase.com) → Project Settings → API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── src/
+│   ├── app/              # Next.js app router pages
+│   │   ├── page.tsx      # Homepage
+│   │   ├── admin/        # Admin product upload
+│   │   ├── [type]/       # Product sections
+│   │   └── product/[id]/ # Product details
+│   ├── components/       # React components
+│   │   ├── Logo.tsx
+│   │   ├── LanguageToggle.tsx
+│   │   ├── AudioNarration.tsx
+│   │   └── PresentationToggle.tsx
+│   ├── context/          # React contexts
+│   │   ├── LanguageContext.tsx
+│   │   └── PresentationContext.tsx
+│   └── lib/              # Utilities
+│       ├── supabase.ts
+│       └── utils.ts
+├── public/
+│   ├── logo.svg          # Store logo
+│   └── audio/            # Narration files
+└── package.json
+```
 
-## Deploy on Vercel
+## 🗄️ Database Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a `products` table in Supabase:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sql
+CREATE TABLE products (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name_en TEXT NOT NULL,
+  name_ar TEXT,
+  description_en TEXT,
+  description_ar TEXT,
+  price NUMERIC NOT NULL,
+  image_url TEXT,
+  section TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create storage bucket for images
+-- Go to Storage → Create bucket named "products" → Make it public
+```
+
+## 📝 Usage
+
+### Upload Products
+1. Navigate to `/admin`
+2. Fill in product details (English/Arabic)
+3. Upload product image
+4. Select section
+5. Submit
+
+### View Products
+- `/` - Homepage
+- `/coffee` - Coffee products
+- `/sweets` - Sweets & desserts  
+- `/gifts` - Gift items
+- `/product/[id]` - Individual product page
+
+## 🎨 Customization
+
+### Colors
+Edit `src/app/globals.css`:
+
+```css
+:root {
+  --beige: #F5EFE6;
+  --brown: #4B3621;
+  --gold: #C9A44C;
+  --olive: #9A9F6D;
+}
+```
+
+### Logo
+Replace `public/logo.svg` with your own logo
+
+### Audio
+Add narration files:
+- `public/audio/narration-en.mp3`
+- `public/audio/narration-ar.mp3`
+
+## 🛠️ Development
+
+```bash
+# Development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## 📄 License
+
+MIT License - feel free to use for your own projects!
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
+
+## 📧 Contact
+
+For questions or support, please open an issue on GitHub.
+
+---
+
+**Made with ❤️ for the Iraqi community**
+
+غريم ستور - تجربة تسوق هادئة مستوحاة من الثقافة العراقية والقيم الإسلامية
