@@ -7,16 +7,7 @@ export default function AdminPage() {
     const [uploading, setUploading] = useState(false);
     const [message, setMessage] = useState("");
 
-    interface ProductData {
-        name_en: string;
-        name_ar: string;
-        description_en: string;
-        description_ar: string;
-        price: number;
-        section: string;
-    }
-
-    async function uploadProduct(data: ProductData, file: File) {
+    async function uploadProduct(data: any, file: File) {
         const { data: upload, error: uploadError } = await supabase.storage
             .from("products")
             .upload(`images/${Date.now()}-${file.name}`, file);
@@ -46,7 +37,7 @@ export default function AdminPage() {
                 throw new Error("Please select an image");
             }
 
-            const productData: ProductData = {
+            const productData = {
                 name_en: formData.get("name_en") as string,
                 name_ar: formData.get("name_ar") as string,
                 description_en: formData.get("description_en") as string,
@@ -59,9 +50,8 @@ export default function AdminPage() {
 
             setMessage("✅ Product uploaded successfully!");
             (e.target as HTMLFormElement).reset();
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
-            setMessage(`❌ Error: ${errorMessage}`);
+        } catch (error: any) {
+            setMessage(`❌ Error: ${error.message}`);
         } finally {
             setUploading(false);
         }
