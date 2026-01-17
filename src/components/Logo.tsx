@@ -16,7 +16,7 @@ export default function Logo() {
             className="flex justify-center"
         >
             <Image
-                src="/logo.svg"
+                src="/logo.png"
                 alt="Gharim Store Logo"
                 width={120}
                 height={120}
