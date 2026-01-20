@@ -1,18 +1,26 @@
-"use client";
-
 import "./globals.css";
-import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
-import { PresentationProvider } from "@/context/PresentationContext";
+import { Cairo, Inter } from 'next/font/google';
+import ClientProviders from "@/components/ClientProviders";
+import type { Metadata } from "next";
 
-function HtmlWrapper({ children }: { children: React.ReactNode }) {
-  const { lang } = useLanguage();
+const cairo = Cairo({
+  subsets: ['arabic'],
+  weight: ['400', '600', '700', '900'],
+  variable: '--font-cairo',
+  display: 'swap',
+});
 
-  return (
-    <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"}>
-      <body>{children}</body>
-    </html>
-  );
-}
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+export const metadata: Metadata = {
+  title: 'Gharim Store - غريم ستور',
+  description: 'A calm shopping experience inspired by Iraqi culture and Islamic values',
+};
 
 export default function RootLayout({
   children,
@@ -20,11 +28,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <LanguageProvider>
-      <PresentationProvider>
-        <HtmlWrapper>{children}</HtmlWrapper>
-      </PresentationProvider>
-    </LanguageProvider>
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <body className={`${cairo.variable} ${inter.variable}`} suppressHydrationWarning>
+        <ClientProviders>
+          {children}
+        </ClientProviders>
+      </body>
+    </html>
   );
 }
 

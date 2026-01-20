@@ -1,9 +1,16 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
+import { useEffect } from "react";
 
 export default function LanguageToggle() {
   const { lang, toggleLang } = useLanguage();
+
+  useEffect(() => {
+    // Update html attributes when language changes
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  }, [lang]);
 
   return (
     <button
